@@ -1,0 +1,39 @@
+# Base journal configuration — all journals inherit from this
+name: Base
+family: generic
+publisher: ""
+
+writing:
+  max_sentence_words: 35
+  english_variant: british
+  hedging_levels: 3
+  tense_rules:
+    abstract: present
+    introduction: present
+    methods: past
+    results: past
+    discussion: present_hedged
+    conclusion: present_hedged
+  forbidden_words: [prove, definitely, always, never, perfectly]
+
+figure:
+  font_family: sans-serif
+  font_sans: [Arial, DejaVu Sans, Liberation Sans]
+  output_format:
+    primary: svg
+    secondary: png@300dpi
+  min_dpi: 300
+  framework_diagram:
+    enabled: false
+    tool: graphviz+matplotlib
+    style: minimal-flat
+
+citation:
+  style: numbered
+  export_formats: [enw, ris, bibtex]
+  max_authors_display: 6
+
+submission:
+  cover_letter_required: false
+  data_availability_required: false
+  competing_interests_required: false

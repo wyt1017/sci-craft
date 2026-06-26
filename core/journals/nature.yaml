@@ -1,0 +1,41 @@
+# Nature journal configuration
+# Inherits from _base.yaml and overrides
+name: Nature
+family: CNS
+publisher: Springer Nature
+
+writing:
+  max_sentence_words: 30
+  english_variant: british
+  hedging_levels: 3
+  tense_rules:
+    abstract: present
+    introduction: present
+    methods: past
+    results: past
+    discussion: present_hedged
+    conclusion: present_hedged
+  forbidden_words: [prove, establish, breakthrough, definitely, perfectly, always, never]
+
+figure:
+  font_family: sans-serif
+  font_sans: [Arial, DejaVu Sans, Liberation Sans]
+  output_format:
+    primary: svg
+    secondary: png@300dpi
+  min_dpi: 300
+  palette: nature-primary
+  framework_diagram:
+    enabled: true
+    tool: graphviz+matplotlib
+    style: minimal-flat
+
+citation:
+  style: nature-numbered
+  export_formats: [enw, ris, zotero-rdf]
+  max_authors_display: 5
+
+submission:
+  cover_letter_required: true
+  data_availability_required: true
+  competing_interests_required: true

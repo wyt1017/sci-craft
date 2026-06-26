@@ -1,0 +1,41 @@
+# Science journal configuration
+# Inherits from _base.yaml and overrides
+name: Science
+family: AAAS
+publisher: AAAS
+
+writing:
+  max_sentence_words: 25
+  english_variant: american
+  hedging_levels: 4
+  tense_rules:
+    abstract: present
+    introduction: present
+    methods: past
+    results: past
+    discussion: present_hedged
+    conclusion: present_hedged
+  forbidden_words: [prove, demonstrate conclusively, definitely, perfectly, always, never]
+
+figure:
+  font_family: sans-serif
+  font_sans: [Helvetica, Arial]
+  output_format:
+    primary: svg
+    secondary: png@600dpi
+  min_dpi: 600
+  palette: science-primary
+  framework_diagram:
+    enabled: true
+    tool: graphviz+matplotlib
+    style: structured-blocks
+
+citation:
+  style: science-numbered
+  export_formats: [enw, ris, bibtex]
+  max_authors_display: 10
+
+submission:
+  cover_letter_required: true
+  data_availability_required: true
+  competing_interests_required: true
