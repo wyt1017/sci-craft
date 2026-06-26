@@ -1,0 +1,15 @@
+name: sci-citation
+version: 0.1.0
+status: beta
+triggers:
+  - "find references"
+  - "citation"
+  - "CNS citation"
+  - "supporting references"
+  - "Zotero RDF"
+  - "文献引用"
+  - "引文格式"
+rules:
+  - citation/format-{{citation_style}}
+  - citation/integrity
+references: []

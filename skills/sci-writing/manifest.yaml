@@ -1,0 +1,18 @@
+name: sci-writing
+version: 0.1.0
+status: beta
+triggers:
+  - "write abstract"
+  - "write introduction"
+  - "manuscript draft"
+  - "Nature writing"
+  - "Science writing"
+  - "draft paper"
+  - "论文写作"
+  - "写论文"
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/tense
+  - writing/overclaim-detect
+references: []

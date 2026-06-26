@@ -43,6 +43,7 @@ figure:
 
 citation:
   style: nature-numbered
+  citation_style: nature
   export_formats: [enw, ris, zotero-rdf]
   max_authors_display: 5
 

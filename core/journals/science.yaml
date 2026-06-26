@@ -43,6 +43,7 @@ figure:
 
 citation:
   style: science-numbered
+  citation_style: science
   export_formats: [enw, ris, bibtex]
   max_authors_display: 10
 
