@@ -1,0 +1,12 @@
+name: sci-data
+version: 0.1.0
+status: draft
+triggers:
+  - "data availability"
+  - "data statement"
+  - "FAIR metadata"
+  - "repository plan"
+  - "数据声明"
+  - "数据可用性"
+rules: []
+references: []

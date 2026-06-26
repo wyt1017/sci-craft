@@ -1,0 +1,13 @@
+name: sci-reader
+version: 0.1.0
+status: draft
+triggers:
+  - "read paper"
+  - "paper summary"
+  - "full markdown"
+  - "bilingual reader"
+  - "原文对照"
+  - "全文翻译"
+  - "论文阅读"
+rules: []
+references: []

@@ -1,0 +1,13 @@
+name: sci-paper2ppt
+version: 0.1.0
+status: draft
+triggers:
+  - "paper PPT"
+  - "journal club"
+  - "paper to slides"
+  - "paper presentation"
+  - "论文PPT"
+  - "论文汇报"
+  - "期刊俱乐部"
+rules: []
+references: []
