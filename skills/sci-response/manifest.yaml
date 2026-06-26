@@ -1,0 +1,14 @@
+name: sci-response
+version: 0.1.0
+status: beta
+triggers:
+  - "response to reviewers"
+  - "rebuttal letter"
+  - "major revision"
+  - "reviewer response"
+  - "审稿回复"
+  - "回复审稿人"
+rules:
+  - writing/hedging
+  - writing/overclaim-detect
+references: []

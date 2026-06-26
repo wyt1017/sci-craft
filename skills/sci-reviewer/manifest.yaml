@@ -1,0 +1,14 @@
+name: sci-reviewer
+version: 0.1.0
+status: beta
+triggers:
+  - "review paper"
+  - "peer review"
+  - "reviewer report"
+  - "pre-submission review"
+  - "Nature reviewer"
+  - "审稿"
+  - "审稿人视角"
+rules:
+  - writing/overclaim-detect
+references: []
