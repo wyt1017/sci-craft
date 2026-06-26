@@ -1,0 +1,19 @@
+name: sci-figure
+version: 0.1.0
+status: stable
+triggers:
+  - "scientific figure"
+  - "publication plot"
+  - "Nature figure"
+  - "Science figure"
+  - "journal figure"
+  - "make figure"
+  - "create plot"
+rules:
+  - figure/typography
+  - figure/palette-nature
+  - figure/layout
+references:
+  - design-theory.md
+  - chart-types.md
+  - common-patterns.md

@@ -1,0 +1,19 @@
+name: sci-polishing
+version: 0.1.0
+status: stable
+triggers:
+  - "polish"
+  - "academic writing"
+  - "Nature style"
+  - "Science style"
+  - "improve prose"
+  - "academic English"
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/tense
+  - writing/overclaim-detect
+references:
+  - phrasebank.md
+  - section-moves.md
+  - style-guardrails.md
