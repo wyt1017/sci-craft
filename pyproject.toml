@@ -1,0 +1,20 @@
+[project]
+name = "sci-craft"
+version = "0.1.0"
+description = "Multi-journal, multi-platform academic writing Skill framework"
+requires-python = ">=3.10"
+dependencies = [
+    "pyyaml>=6.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+]
+
+[project.scripts]
+sci-craft = "scripts.build:main"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
