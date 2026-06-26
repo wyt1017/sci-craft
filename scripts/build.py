@@ -9,6 +9,8 @@ PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
 from adapters.trae import TraeAdapter
+from adapters.codex import CodexAdapter
+from adapters.claude import ClaudeAdapter
 from builder.assembler import Assembler
 from builder.validator import validate_skill
 
@@ -19,6 +21,8 @@ OUTPUT_DIR = PROJECT_ROOT / "output"
 
 ADAPTERS = {
     "trae": TraeAdapter,
+    "codex": CodexAdapter,
+    "claude": ClaudeAdapter,
 }
 
 BUILTIN_SKILLS = [
@@ -79,7 +83,7 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
 def main():
     parser = argparse.ArgumentParser(description="Build sci-craft skills")
     parser.add_argument("--journal", choices=["nature", "science"], help="Target journal (required for build)")
-    parser.add_argument("--platform", choices=["trae"], help="Target platform (required for build)")
+    parser.add_argument("--platform", choices=["trae", "codex", "claude"], help="Target platform (required for build)")
     parser.add_argument("--skill", default=None, help="Build a single skill (default: all)")
     parser.add_argument("--validate-only", action="store_true", help="Only validate, do not build")
     args = parser.parse_args()
