@@ -78,8 +78,8 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
 
 def main():
     parser = argparse.ArgumentParser(description="Build sci-craft skills")
-    parser.add_argument("--journal", required=True, choices=["nature", "science"], help="Target journal")
-    parser.add_argument("--platform", required=True, choices=["trae"], help="Target platform")
+    parser.add_argument("--journal", choices=["nature", "science"], help="Target journal (required for build)")
+    parser.add_argument("--platform", choices=["trae"], help="Target platform (required for build)")
     parser.add_argument("--skill", default=None, help="Build a single skill (default: all)")
     parser.add_argument("--validate-only", action="store_true", help="Only validate, do not build")
     args = parser.parse_args()
@@ -98,6 +98,10 @@ def main():
             else:
                 print(f"PASS: {name}")
         sys.exit(0 if all_valid else 1)
+
+    # Build mode requires journal and platform
+    if not args.journal or not args.platform:
+        parser.error("--journal and --platform are required for build mode (use --validate-only to skip)")
 
     skills = [args.skill] if args.skill else BUILTIN_SKILLS
     success = True

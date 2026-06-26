@@ -11,7 +11,7 @@ triggers:
   - "create plot"
 rules:
   - figure/typography
-  - figure/palette-nature
+  - figure/palette-{{palette}}
   - figure/layout
 references:
   - design-theory.md

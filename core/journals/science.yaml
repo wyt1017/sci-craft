@@ -7,6 +7,17 @@ publisher: AAAS
 writing:
   max_sentence_words: 25
   english_variant: american
+  english_variant_rules: |
+    - Use "signaling" not "signalling"
+    - Use "color" not "colour"
+    - Use "analyze" not "analyse"
+    - Use "program" not "programme" (noun)
+    - Use "modeling" not "modelling"
+    - Use "behavior" not "behaviour"
+    - Use "favor" not "favour"
+    - Use "organize" not "organise"
+    - Use "center" not "centre"
+    - Use "license" not "licence" (noun)
   hedging_levels: 4
   tense_rules:
     abstract: present
@@ -24,7 +35,7 @@ figure:
     primary: svg
     secondary: png@600dpi
   min_dpi: 600
-  palette: science-primary
+  palette: science
   framework_diagram:
     enabled: true
     tool: graphviz+matplotlib

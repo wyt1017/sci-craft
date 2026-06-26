@@ -129,7 +129,13 @@ class Assembler:
         flat_config = _flatten(config)
 
         for rule_ref in rule_refs:
-            rule_path = self.rules_dir / f"{rule_ref}.md"
+            # Render template variables in rule references (e.g. palette-{{palette}})
+            rendered_ref = rule_ref
+            for key, value in flat_config.items():
+                placeholder = "{{" + key + "}}"
+                if placeholder in rendered_ref:
+                    rendered_ref = rendered_ref.replace(placeholder, str(value))
+            rule_path = self.rules_dir / f"{rendered_ref}.md"
             if not rule_path.exists():
                 continue
             rule_content = rule_path.read_text(encoding="utf-8")
@@ -138,6 +144,13 @@ class Assembler:
                 placeholder = "{{" + key + "}}"
                 if placeholder in rule_content:
                     rule_content = rule_content.replace(placeholder, str(value))
+                # Also render _list suffix for list values
+                list_placeholder = "{{" + key + "_list}}"
+                if list_placeholder in rule_content:
+                    rule_content = rule_content.replace(
+                        list_placeholder,
+                        repr(value) if isinstance(value, list) else str(value),
+                    )
             rule_sections.append(rule_content)
 
         return content.replace(injection_point, "\n\n---\n\n".join(rule_sections))

@@ -11,7 +11,7 @@ triggers:
   - "draw framework"
 rules:
   - figure/framework-diagram
-  - figure/palette-nature
+  - figure/palette-{{palette}}
 references:
   - dot-syntax.md
   - diagram-patterns.md

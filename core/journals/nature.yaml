@@ -7,6 +7,17 @@ publisher: Springer Nature
 writing:
   max_sentence_words: 30
   english_variant: british
+  english_variant_rules: |
+    - Use "signalling" not "signaling"
+    - Use "colour" not "color"
+    - Use "analyse" not "analyze"
+    - Use "programme" not "program" (noun)
+    - Use "modelling" not "modeling"
+    - Use "behaviour" not "behavior"
+    - Use "favour" not "favor"
+    - Use "organise" not "organize"
+    - Use "centre" not "center"
+    - Use "licence" not "license" (noun)
   hedging_levels: 3
   tense_rules:
     abstract: present
@@ -24,7 +35,7 @@ figure:
     primary: svg
     secondary: png@300dpi
   min_dpi: 300
-  palette: nature-primary
+  palette: nature
   framework_diagram:
     enabled: true
     tool: graphviz+matplotlib
