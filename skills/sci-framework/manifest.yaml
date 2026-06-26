@@ -1,0 +1,17 @@
+name: sci-framework
+version: 0.1.0
+status: stable
+triggers:
+  - "framework diagram"
+  - "architecture diagram"
+  - "model architecture"
+  - "system pipeline"
+  - "experimental setup diagram"
+  - "data flow diagram"
+  - "draw framework"
+rules:
+  - figure/framework-diagram
+  - figure/palette-nature
+references:
+  - dot-syntax.md
+  - diagram-patterns.md
