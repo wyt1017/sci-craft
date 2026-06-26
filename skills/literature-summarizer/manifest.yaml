@@ -1,0 +1,15 @@
+name: literature-summarizer
+version: 0.1.0
+status: beta
+triggers:
+  - "literature summary"
+  - "文献摘要"
+  - "文献总结"
+  - "paper summary"
+  - "阅读文献"
+  - "reading notes"
+  - "阅读笔记"
+  - "knowledge graph"
+  - "知识图谱"
+rules: []
+references: []

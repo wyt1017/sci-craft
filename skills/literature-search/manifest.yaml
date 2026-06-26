@@ -1,0 +1,15 @@
+name: literature-search
+version: 0.1.0
+status: beta
+triggers:
+  - "literature search"
+  - "文献检索"
+  - "文献搜索"
+  - "search strategy"
+  - "检索策略"
+  - "database search"
+  - "数据库检索"
+  - "find papers"
+  - "查找文献"
+rules: []
+references: []

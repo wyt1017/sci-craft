@@ -1,0 +1,15 @@
+name: bibliometrics-analyzer
+version: 0.1.0
+status: beta
+triggers:
+  - "bibliometrics"
+  - "文献计量"
+  - "citation analysis"
+  - "引用分析"
+  - "co-occurrence analysis"
+  - "共现分析"
+  - "research trend"
+  - "研究趋势"
+  - "bibliometric analysis"
+rules: []
+references: []

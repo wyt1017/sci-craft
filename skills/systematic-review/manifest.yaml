@@ -1,0 +1,15 @@
+name: systematic-review
+version: 0.1.0
+status: beta
+triggers:
+  - "systematic review"
+  - "系统综述"
+  - "meta-analysis"
+  - "元分析"
+  - "PRISMA"
+  - "literature review"
+  - "文献综述"
+  - "evidence synthesis"
+  - "证据合成"
+rules: []
+references: []

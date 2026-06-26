@@ -1,0 +1,14 @@
+name: research-gap-finder
+version: 0.1.0
+status: beta
+triggers:
+  - "research gap"
+  - "研究空白"
+  - "gap analysis"
+  - "空白分析"
+  - "contradiction analysis"
+  - "矛盾发现"
+  - "identify gap"
+  - "识别空白"
+rules: []
+references: []
