@@ -299,3 +299,10 @@ description: "文献阅读与分层摘要生成技能。对已获取的文献进
 - 定期回顾和更新知识图谱
 - 将文献阅读与研究日志结合
 - 使用颜色或标签区分不同重要程度的文献
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

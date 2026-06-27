@@ -440,3 +440,10 @@ Included
 - 预注册研究方案
 - 遵循报告指南（PRISMA、MOCHA、SPIDER）
 - 考虑使用GRADEpro制作证据概况表
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

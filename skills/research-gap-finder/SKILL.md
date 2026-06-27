@@ -304,3 +304,10 @@ description: "研究空白识别与矛盾发现技能。通过系统性分析文
 - 邀请同行对空白识别进行验证
 - 将空白识别与研究兴趣结合
 - 定期更新空白清单（跟踪新发表的文献）
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

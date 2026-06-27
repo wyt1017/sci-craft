@@ -42,3 +42,10 @@ Every citation must serve one of these roles:
 Return:
 1. **In-text citations**: Superscript numbers [1], [2], etc.
 2. **Reference list**: Full formatted entries in {{citation_style}} style, numbered in order of appearance
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

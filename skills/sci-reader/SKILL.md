@@ -88,3 +88,10 @@ See [Fig. 3] for details.
 - **Figure captions**: Translate caption text, keep `[Fig. N]` anchor
 - **Table notes**: Translate all footnotes and abbreviations
 - **References**: Do not translate reference entries; keep original formatting
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

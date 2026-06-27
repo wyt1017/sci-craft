@@ -3,16 +3,25 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Default fonts
+DEFAULT_FONTS = {
+    "nature": ["Arial", "DejaVu Sans", "Liberation Sans"],
+    "science": ["Helvetica", "Arial"],
+}
+
+
 def create_heatmap(
     data: list[list[float]],
     row_labels: list[str],
     col_labels: list[str],
     title: str = "",
     colormap: str = "coolwarm",
+    fonts: list[str] | None = None,
     output_path: str = "heatmap",
     journal_dpi: int = 300,
     annotate: bool = True,
     fmt: str = ".2f",
+    figsize: tuple[float, float] | None = None,
 ):
     """Create a heatmap with optional cell annotations.
 
@@ -22,18 +31,25 @@ def create_heatmap(
         col_labels: Column labels.
         title: Optional panel title.
         colormap: Matplotlib colormap name.
+        fonts: List of font names for sans-serif family.
         output_path: File path without extension.
         journal_dpi: Raster DPI for PNG output.
         annotate: Whether to show values in cells.
         fmt: Number format for annotations.
+        figsize: Figure size as (width, height) tuple.
     """
+    if fonts is None:
+        fonts = DEFAULT_FONTS["nature"]
+    if figsize is None:
+        figsize = (4, 3)
+
     plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["Arial", "DejaVu Sans", "Liberation Sans"]
+    plt.rcParams["font.sans-serif"] = fonts
     plt.rcParams["svg.font_type"] = "none"
     plt.rcParams["font.size"] = 8
     plt.rcParams["axes.linewidth"] = 0.5
 
-    fig, ax = plt.subplots(figsize=(4, 3))
+    fig, ax = plt.subplots(figsize=figsize)
     im = ax.imshow(data, cmap=colormap, aspect="auto")
 
     ax.set_xticks(range(len(col_labels)))

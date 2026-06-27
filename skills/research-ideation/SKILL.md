@@ -372,3 +372,10 @@ H2: [假设2]
 - 将大课题分解为可管理的子课题
 - 保持课题的灵活性，允许迭代优化
 - 定期回顾和调整研究计划
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

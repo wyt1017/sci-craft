@@ -10,14 +10,24 @@ sys.path.insert(0, str(PROJECT_ROOT))
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
 from adapters.trae import TraeAdapter
+from adapters.codex import CodexAdapter
+from adapters.claude import ClaudeAdapter
 
 ADAPTERS = {
     "trae": TraeAdapter,
+    "codex": CodexAdapter,
+    "claude": ClaudeAdapter,
 }
 
 
-def install(journal: str, platform: str, skill: str | None = None) -> bool:
+def install(journal: str, platform: str, skill: str | None = None, force: bool = False) -> bool:
     """Install built skills to the platform's skill directory.
+
+    Args:
+        journal: Target journal name.
+        platform: Target platform name.
+        skill: Specific skill to install (None for all).
+        force: If True, overwrite existing skills without warning.
 
     Returns True on success.
     """
@@ -49,18 +59,30 @@ def install(journal: str, platform: str, skill: str | None = None) -> bool:
     for src in skill_dirs:
         dest = install_path / src.name
         if dest.exists():
-            shutil.rmtree(dest)
-        shutil.copytree(src, dest)
-        print(f"INSTALLED: {src.name} → {dest}")
+            if force:
+                shutil.rmtree(dest)
+                shutil.copytree(src, dest)
+                print(f"OVERRIDDEN: {src.name} → {dest}")
+            else:
+                print(f"SKIP: {src.name} (already exists, use --force to overwrite)")
+        else:
+            shutil.copytree(src, dest)
+            print(f"INSTALLED: {src.name} → {dest}")
 
     # Also install _shared if it exists
     shared_source = PROJECT_ROOT / "skills" / "_shared"
     if shared_source.exists():
         shared_dest = install_path / "_shared"
         if shared_dest.exists():
-            shutil.rmtree(shared_dest)
-        shutil.copytree(shared_source, shared_dest)
-        print(f"INSTALLED: _shared → {shared_dest}")
+            if force:
+                shutil.rmtree(shared_dest)
+                shutil.copytree(shared_source, shared_dest)
+                print(f"OVERRIDDEN: _shared → {shared_dest}")
+            else:
+                print(f"SKIP: _shared (already exists, use --force to overwrite)")
+        else:
+            shutil.copytree(shared_source, shared_dest)
+            print(f"INSTALLED: _shared → {shared_dest}")
 
     return True
 
@@ -68,11 +90,12 @@ def install(journal: str, platform: str, skill: str | None = None) -> bool:
 def main():
     parser = argparse.ArgumentParser(description="Install sci-craft skills to target platform")
     parser.add_argument("--journal", required=True, choices=["nature", "science"], help="Target journal")
-    parser.add_argument("--platform", required=True, choices=["trae"], help="Target platform")
+    parser.add_argument("--platform", required=True, choices=["trae", "codex", "claude"], help="Target platform")
     parser.add_argument("--skill", default=None, help="Install a single skill (default: all)")
+    parser.add_argument("--force", action="store_true", help="Force overwrite existing installations")
     args = parser.parse_args()
 
-    success = install(args.journal, args.platform, args.skill)
+    success = install(args.journal, args.platform, args.skill, args.force)
     sys.exit(0 if success else 1)
 
 

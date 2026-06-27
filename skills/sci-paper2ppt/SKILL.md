@@ -69,3 +69,10 @@ prs.save("output.pptx")
 2. Map content to the slide structure above
 3. Generate the `python-pptx` script
 4. Instruct the user to run the script to produce the PPTX file
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

@@ -1,10 +1,12 @@
 """Skill validator — checks skill directory completeness and correctness."""
+import re
 from pathlib import Path
 
 import yaml
 
 
 REQUIRED_MANIFEST_FIELDS = ["name", "version", "status", "triggers"]
+VALID_STATUSES = {"stable", "beta", "experimental", "draft"}
 
 
 class ValidationError:
@@ -28,6 +30,9 @@ def validate_skill(skill_dir: Path) -> list[ValidationError]:
     2. manifest.yaml exists and is valid YAML
     3. manifest.yaml has all required fields
     4. Referenced files exist
+    5. Version follows semantic versioning
+    6. Status is a valid value
+    7. Triggers is a non-empty list or string
 
     Args:
         skill_dir: Path to the skill directory.
@@ -58,20 +63,41 @@ def validate_skill(skill_dir: Path) -> list[ValidationError]:
         except yaml.YAMLError as e:
             errors.append(ValidationError(f"manifest.yaml has invalid YAML: {e}"))
 
-    # 3. Required manifest fields
+    # 3. Required manifest fields and format validation
     if isinstance(manifest, dict):
         for field in REQUIRED_MANIFEST_FIELDS:
             if field not in manifest:
                 errors.append(ValidationError(f"manifest.yaml missing required field: {field}"))
+            else:
+                # Validate field formats
+                if field == "version":
+                    version = manifest[field]
+                    if not isinstance(version, str) or not re.match(r"^\d+\.\d+\.\d+$", version):
+                        errors.append(ValidationError(
+                            f"manifest.yaml 'version' must follow semantic versioning (e.g., '1.0.0'), got: {version!r}"
+                        ))
+                elif field == "status":
+                    status = manifest[field]
+                    if status not in VALID_STATUSES:
+                        errors.append(ValidationError(
+                            f"manifest.yaml 'status' must be one of {sorted(VALID_STATUSES)}, got: {status!r}"
+                        ))
+                elif field == "triggers":
+                    triggers = manifest[field]
+                    if not isinstance(triggers, (list, str)) or (isinstance(triggers, list) and len(triggers) == 0):
+                        errors.append(ValidationError(
+                            "manifest.yaml 'triggers' must be a non-empty list or a non-empty string"
+                        ))
 
         # 4. Referenced files exist
         references = manifest.get("references", [])
-        for ref in references:
-            ref_path = skill_dir / "references" / ref
-            if not ref_path.exists():
-                # Also check if ref is relative to skill_dir directly
-                alt_path = skill_dir / ref
-                if not alt_path.exists():
-                    errors.append(ValidationError(f"Referenced file not found: {ref}"))
+        if references:
+            for ref in references:
+                ref_path = skill_dir / "references" / ref
+                if not ref_path.exists():
+                    # Also check if ref is relative to skill_dir directly
+                    alt_path = skill_dir / ref
+                    if not alt_path.exists():
+                        errors.append(ValidationError(f"Referenced file not found: {ref}"))
 
     return errors

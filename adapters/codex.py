@@ -1,8 +1,11 @@
 """Codex platform adapter."""
+import logging
 import shutil
 from pathlib import Path
 
 from adapters.base import BaseAdapter
+
+logger = logging.getLogger(__name__)
 
 
 class CodexAdapter(BaseAdapter):
@@ -23,15 +26,19 @@ class CodexAdapter(BaseAdapter):
         skill_name = skill_dir.name
         dest = output_dir / skill_name
 
-        if dest.exists():
-            shutil.rmtree(dest)
-
-        shutil.copytree(skill_dir, dest)
+        try:
+            shutil.copytree(skill_dir, dest, dirs_exist_ok=True)
+        except Exception as e:
+            logger.error(f"Failed to copy skill '{skill_name}' to {dest}: {e}")
+            raise
 
         # Remove manifest.yaml (Codex doesn't use it)
         manifest = dest / "manifest.yaml"
         if manifest.exists():
-            manifest.unlink()
+            try:
+                manifest.unlink()
+            except Exception as e:
+                logger.warning(f"Failed to remove manifest.yaml from '{skill_name}': {e}")
 
     def get_install_path(self) -> Path:
         """Return Codex skills directory path."""

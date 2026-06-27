@@ -364,3 +364,10 @@ description: "文献计量分析技能。对学术文献进行定量分析，包
 - 结合定性分析理解定量结果
 - 定期更新分析以跟踪最新趋势
 - 分享分析方法和数据以提高透明度
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

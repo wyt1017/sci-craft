@@ -172,7 +172,15 @@ python scripts/build.py --journal nature --skill sci-polishing
 
 ## License
 
-MIT License. See [LICENSE](LICENSE) for details.
+MIT License
+
+## Contributing & Feedback
+
+We welcome bug reports and feature suggestions!
+
+- **Report a Bug**: [GitHub Issues - Bug Report](https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md)
+- **Request a Feature**: [GitHub Issues - Feature Request](https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md)
+- **General Feedback**: [GitHub Issues - Skill Feedback](https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md). See [LICENSE](LICENSE) for details.
 
 ## 项目文档
 

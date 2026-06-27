@@ -3,15 +3,29 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Default palettes per journal
+DEFAULT_PALETTES = {
+    "nature": ["#0C5DA5", "#00B945", "#FF2C00", "#FF9500", "#845B97", "#474747"],
+    "science": ["#0072B2", "#D59E00", "#009E73", "#CC7722", "#984EA3", "#A0A0A0"],
+}
+
+DEFAULT_FONTS = {
+    "nature": ["Arial", "DejaVu Sans", "Liberation Sans"],
+    "science": ["Helvetica", "Arial"],
+}
+
+
 def create_bar_chart(
     data: dict[str, list[float]],
     labels: list[str],
     ylabel: str = "",
     title: str = "",
     palette: list[str] | None = None,
+    fonts: list[str] | None = None,
     output_path: str = "bar_chart",
     journal_dpi: int = 300,
     group_spacing: float = 0.2,
+    figsize: tuple[float, float] | None = None,
 ):
     """Create a grouped bar chart.
 
@@ -20,17 +34,23 @@ def create_bar_chart(
         labels: X-axis group labels.
         ylabel: Y-axis label.
         title: Optional panel title.
-        palette: List of hex color strings.
+        palette: List of hex color strings. Falls back to Nature palette if not provided.
+        fonts: List of font names for sans-serif family.
         output_path: File path without extension.
         journal_dpi: Raster DPI for PNG output.
         group_spacing: Spacing between label groups.
+        figsize: Figure size as (width, height) tuple.
     """
     if palette is None:
-        palette = ["#0C5DA5", "#00B945", "#FF2C00", "#FF9500", "#845B97", "#474747"]
+        palette = DEFAULT_PALETTES["nature"]
+    if fonts is None:
+        fonts = DEFAULT_FONTS["nature"]
+    if figsize is None:
+        figsize = (3.5, 2.5)
 
     # Mandatory rcParams
     plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["Arial", "DejaVu Sans", "Liberation Sans"]
+    plt.rcParams["font.sans-serif"] = fonts
     plt.rcParams["svg.font_type"] = "none"
     plt.rcParams["font.size"] = 8
     plt.rcParams["axes.linewidth"] = 0.5
@@ -40,7 +60,7 @@ def create_bar_chart(
     x = np.arange(n_groups)
     width = (1 - group_spacing) / n_series
 
-    fig, ax = plt.subplots(figsize=(3.5, 2.5))
+    fig, ax = plt.subplots(figsize=figsize)
     for i, (series_name, values) in enumerate(data.items()):
         offset = (i - n_series / 2 + 0.5) * width
         ax.bar(x + offset, values, width, label=series_name, color=palette[i % len(palette)], linewidth=0.5, edgecolor="white")

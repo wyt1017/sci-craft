@@ -3,11 +3,36 @@ import subprocess
 import tempfile
 from pathlib import Path
 
+# Graphviz-compatible shapes (cylinder is not natively supported)
+SHAPE_MAP = {
+    "process": "box,style=rounded",
+    "data": "ellipse,style=dashed",
+    "decision": "diamond",
+    "io": "parallelogram",
+    "database": "cylinder,style=filled",
+}
+
+# Default journal palettes
+DEFAULT_PALETTE_NATURE = {
+    "process": "#0C5DA5",
+    "data": "#00B945",
+    "decision": "#FF9500",
+    "io": "#845B97",
+}
+
+DEFAULT_PALETTE_SCIENCE = {
+    "process": "#0072B2",
+    "data": "#009E73",
+    "decision": "#D59E00",
+    "io": "#984EA3",
+}
+
 
 def create_framework_diagram(
     dot_source: str,
     output_path: str = "framework_diagram",
     engine: str = "dot",
+    timeout: int = 30,
 ):
     """Generate a framework diagram from Graphviz dot source.
 
@@ -15,6 +40,7 @@ def create_framework_diagram(
         dot_source: Valid Graphviz dot language string.
         output_path: File path without extension.
         engine: Graphviz layout engine (dot, neato, fdp, etc.).
+        timeout: Maximum seconds to wait for Graphviz (default: 30).
     """
     dot_path = Path(f"{output_path}.dot")
     svg_path = Path(f"{output_path}.svg")
@@ -23,18 +49,20 @@ def create_framework_diagram(
     # Save dot source for editability
     dot_path.write_text(dot_source, encoding="utf-8")
 
-    # Generate SVG
+    # Generate SVG with timeout
     result = subprocess.run(
         [engine, "-Tsvg", "-o", str(svg_path), str(dot_path)],
         capture_output=True, text=True,
+        timeout=timeout,
     )
     if result.returncode != 0:
         raise RuntimeError(f"Graphviz error: {result.stderr}")
 
-    # Generate PNG at 300dpi
+    # Generate PNG at 300dpi with timeout
     subprocess.run(
         [engine, "-Tpng", "-Gdpi=300", "-o", str(png_path), str(dot_path)],
         capture_output=True, text=True,
+        timeout=timeout,
     )
 
     print(f"Saved: {svg_path}, {png_path}, {dot_path}")
@@ -50,13 +78,12 @@ def model_architecture_dot(
 
     Args:
         layers: List of {"name": str, "type": str, "label": str}.
-            type: "process" | "data" | "decision"
-        palette: Optional color overrides.
+            type: "process" | "data" | "decision" | "io"
+        palette: Optional color overrides. Falls back to Nature palette.
     """
     if palette is None:
-        palette = {"process": "#0C5DA5", "data": "#00B945", "decision": "#FF9500"}
+        palette = DEFAULT_PALETTE_NATURE
 
-    shape_map = {"process": "box,style=rounded", "data": "cylinder", "decision": "diamond"}
     lines = [
         'digraph ModelArchitecture {',
         '  rankdir=TB;',
@@ -67,7 +94,7 @@ def model_architecture_dot(
     ]
 
     for i, layer in enumerate(layers):
-        shape = shape_map.get(layer["type"], "box,style=rounded")
+        shape = SHAPE_MAP.get(layer["type"], "box,style=rounded")
         color = palette.get(layer["type"], "#0C5DA5")
         lines.append(f'  node{i} [label="{layer["label"]}", shape={shape}, fillcolor="{color}", fontcolor="white"];')
 
@@ -90,14 +117,13 @@ def pipeline_dot(
         stages: List of {"name": str, "type": str, "label": str}.
         connections: List of (from_idx, to_idx, label) tuples.
             Default is sequential.
-        palette: Optional color overrides.
+        palette: Optional color overrides. Falls back to Nature palette.
     """
     if palette is None:
-        palette = {"process": "#0C5DA5", "data": "#00B945", "io": "#845B97"}
+        palette = DEFAULT_PALETTE_NATURE
     if connections is None:
         connections = [(i, i + 1, "") for i in range(len(stages) - 1)]
 
-    shape_map = {"process": "box,style=rounded", "data": "cylinder", "io": "parallelogram"}
     lines = [
         'digraph SystemPipeline {',
         '  rankdir=LR;',
@@ -108,7 +134,7 @@ def pipeline_dot(
     ]
 
     for i, stage in enumerate(stages):
-        shape = shape_map.get(stage["type"], "box,style=rounded")
+        shape = SHAPE_MAP.get(stage["type"], "box,style=rounded")
         color = palette.get(stage["type"], "#0C5DA5")
         lines.append(f'  stage{i} [label="{stage["label"]}", shape={shape}, fillcolor="{color}", fontcolor="white"];')
 

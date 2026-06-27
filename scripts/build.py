@@ -1,7 +1,9 @@
 """Build script — assemble and validate skills for a target journal and platform."""
 import argparse
+import logging
 import shutil
 import sys
+import tempfile
 from pathlib import Path
 
 # Add project root to path
@@ -14,6 +16,7 @@ from adapters.claude import ClaudeAdapter
 from builder.assembler import Assembler
 from builder.validator import validate_skill
 
+logger = logging.getLogger(__name__)
 
 SKILLS_DIR = PROJECT_ROOT / "skills"
 CORE_DIR = PROJECT_ROOT / "core"
@@ -34,6 +37,9 @@ BUILTIN_SKILLS = [
 def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) -> bool:
     """Build a single skill for a specific journal and platform.
 
+    Uses a temporary directory for atomic operations — only moves to final
+    location on success.
+
     Returns True on success.
     """
     skill_dir = SKILLS_DIR / skill_name
@@ -53,31 +59,42 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
     assembler = Assembler(CORE_DIR)
     assembled_content = assembler.assemble(journal, skill_dir)
 
-    # Write to temp dir for adapter
-    temp_skill_dir = output_dir / "_temp" / skill_name
-    if temp_skill_dir.exists():
-        shutil.rmtree(temp_skill_dir)
-    shutil.copytree(skill_dir, temp_skill_dir)
+    # Write to temp dir for atomic operation
+    temp_base = output_dir / "_temp"
+    temp_base.mkdir(parents=True, exist_ok=True)
+    temp_skill_dir = tempfile.mkdtemp(dir=str(temp_base), prefix=f"{skill_name}-")
+    temp_skill_dir = Path(temp_skill_dir)
 
-    # Overwrite SKILL.md with assembled content
-    (temp_skill_dir / "SKILL.md").write_text(assembled_content, encoding="utf-8")
+    try:
+        # Copy skill to temp dir
+        shutil.copytree(skill_dir, temp_skill_dir)
 
-    # Adapt
-    adapter_cls = ADAPTERS.get(platform)
-    if not adapter_cls:
-        print(f"ERROR: Unknown platform: {platform}")
-        return False
+        # Also copy _shared for adapters that need it (e.g., Claude)
+        shared_source = SKILLS_DIR / "_shared"
+        if shared_source.exists():
+            shared_dest = temp_skill_dir.parent / "_shared"
+            shutil.copytree(shared_source, shared_dest, dirs_exist_ok=True)
 
-    adapter = adapter_cls()
-    platform_output = output_dir / platform / journal
-    platform_output.mkdir(parents=True, exist_ok=True)
-    adapter.adapt_skill(temp_skill_dir, platform_output)
+        # Overwrite SKILL.md with assembled content
+        (temp_skill_dir / "SKILL.md").write_text(assembled_content, encoding="utf-8")
 
-    # Cleanup temp
-    shutil.rmtree(temp_skill_dir)
+        # Adapt
+        adapter_cls = ADAPTERS.get(platform)
+        if not adapter_cls:
+            print(f"ERROR: Unknown platform: {platform}")
+            return False
 
-    print(f"OK: {skill_name} → {platform}/{journal}/")
-    return True
+        adapter = adapter_cls()
+        platform_output = output_dir / platform / journal
+        platform_output.mkdir(parents=True, exist_ok=True)
+        adapter.adapt_skill(temp_skill_dir, platform_output)
+
+        print(f"OK: {skill_name} → {platform}/{journal}/")
+        return True
+
+    finally:
+        # Always cleanup temp dir
+        shutil.rmtree(temp_skill_dir, ignore_errors=True)
 
 
 def main():

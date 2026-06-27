@@ -93,3 +93,10 @@ When journal requirements are loaded from `core/journals/{{name}}.yaml`, the fol
 4. Produce a Repository Plan mapping each artifact to the best repository
 5. Run the FAIR Compliance Check and flag any gaps
 6. Output all three components as a single Markdown document
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

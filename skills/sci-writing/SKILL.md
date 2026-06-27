@@ -73,3 +73,10 @@ When the user provides a Chinese draft or notes:
 ## Output Format
 
 Return the manuscript section as plain text. No markdown formatting within the prose.
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

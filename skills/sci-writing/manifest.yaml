@@ -16,3 +16,7 @@ rules:
   - writing/tense
   - writing/overclaim-detect
 references: []
+feedback:
+  bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+  feature_request: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+  general_feedback: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

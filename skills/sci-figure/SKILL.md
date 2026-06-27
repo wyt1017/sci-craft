@@ -65,3 +65,10 @@ Use the {{name}} color palette in this order:
 3. Generate the matplotlib script with correct rcParams
 4. Save SVG and PNG outputs
 5. Provide the dot source for editability
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

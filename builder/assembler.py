@@ -1,12 +1,13 @@
 """Skill assembler — combines journal config + rules + SKILL.md template."""
 from pathlib import Path
+from copy import deepcopy
 
 import yaml
 
 
 def _deep_merge(base: dict, override: dict) -> dict:
     """Deep merge override into base, returning a new dict."""
-    result = base.copy()
+    result = deepcopy(base)
     for key, value in override.items():
         if key in result and isinstance(result[key], dict) and isinstance(value, dict):
             result[key] = _deep_merge(result[key], value)
@@ -104,11 +105,11 @@ class Assembler:
                 content = content.replace(placeholder, repr(value) if isinstance(value, list) else str(value))
 
         # Inject rules at RULES_INJECTION_POINT
-        content = self._inject_rules(content, skill_dir, config)
+        content = self._inject_rules(content, skill_dir, flat_config)
 
         return content
 
-    def _inject_rules(self, content: str, skill_dir: Path, config: dict) -> str:
+    def _inject_rules(self, content: str, skill_dir: Path, flat_config: dict) -> str:
         """Inject referenced rules at the injection point."""
         injection_point = "{{RULES_INJECTION_POINT}}"
         if injection_point not in content:
@@ -126,7 +127,6 @@ class Assembler:
             return content.replace(injection_point, "")
 
         rule_sections: list[str] = []
-        flat_config = _flatten(config)
 
         for rule_ref in rule_refs:
             # Render template variables in rule references (e.g. palette-{{palette}})

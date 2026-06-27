@@ -42,3 +42,10 @@ You are an expert academic editor following {{name}} journal conventions.
 
 Return the polished text as plain text, with a brief summary of changes made.
 List any overclaim flags that required revision.
+
+## Feedback
+
+Found a bug or have suggestions? Help improve this skill:
+- **Report Bug**: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
+- **Request Feature**: https://github.com/wyt1017/sci-craft/issues/new?template=feature-request.md
+- **General Feedback**: https://github.com/wyt1017/sci-craft/issues/new?template=skill-feedback.md

@@ -3,6 +3,18 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 
+# Default palettes per journal
+DEFAULT_PALETTES = {
+    "nature": ["#0C5DA5", "#00B945", "#FF2C00", "#FF9500", "#845B97", "#474747"],
+    "science": ["#0072B2", "#D59E00", "#009E73", "#CC7722", "#984EA3", "#A0A0A0"],
+}
+
+DEFAULT_FONTS = {
+    "nature": ["Arial", "DejaVu Sans", "Liberation Sans"],
+    "science": ["Helvetica", "Arial"],
+}
+
+
 def create_line_chart(
     x_data: list[float],
     y_series: dict[str, list[float]],
@@ -10,11 +22,13 @@ def create_line_chart(
     ylabel: str = "",
     title: str = "",
     palette: list[str] | None = None,
+    fonts: list[str] | None = None,
+    markers: list[str] | None = None,
     output_path: str = "line_chart",
     journal_dpi: int = 300,
-    markers: list[str] | None = None,
     show_error: bool = False,
     error_bands: dict[str, tuple[list[float], list[float]]] | None = None,
+    figsize: tuple[float, float] | None = None,
 ):
     """Create a line chart with optional error bands.
 
@@ -24,25 +38,31 @@ def create_line_chart(
         xlabel: X-axis label.
         ylabel: Y-axis label.
         title: Optional panel title.
-        palette: List of hex color strings.
+        palette: List of hex color strings. Falls back to Nature palette if not provided.
+        fonts: List of font names for sans-serif family.
         output_path: File path without extension.
         journal_dpi: Raster DPI for PNG output.
         markers: Marker styles per series.
         show_error: Whether to show error bands.
         error_bands: Series name -> (lower, upper) for shaded error.
+        figsize: Figure size as (width, height) tuple.
     """
     if palette is None:
-        palette = ["#0C5DA5", "#00B945", "#FF2C00", "#FF9500", "#845B97"]
+        palette = DEFAULT_PALETTES["nature"]
+    if fonts is None:
+        fonts = DEFAULT_FONTS["nature"]
     if markers is None:
         markers = ["o", "s", "^", "D", "v"]
+    if figsize is None:
+        figsize = (3.5, 2.5)
 
     plt.rcParams["font.family"] = "sans-serif"
-    plt.rcParams["font.sans-serif"] = ["Arial", "DejaVu Sans", "Liberation Sans"]
+    plt.rcParams["font.sans-serif"] = fonts
     plt.rcParams["svg.font_type"] = "none"
     plt.rcParams["font.size"] = 8
     plt.rcParams["axes.linewidth"] = 0.5
 
-    fig, ax = plt.subplots(figsize=(3.5, 2.5))
+    fig, ax = plt.subplots(figsize=figsize)
     for i, (name, y_vals) in enumerate(y_series.items()):
         ax.plot(x_data, y_vals, marker=markers[i % len(markers)], markersize=4, linewidth=1.2, label=name, color=palette[i % len(palette)])
         if show_error and error_bands and name in error_bands:

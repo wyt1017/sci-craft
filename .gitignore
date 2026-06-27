@@ -6,6 +6,10 @@ dist/
 build/
 .venv/
 venv/
+*.pyc
+.coverage
+htmlcov/
+.pytest_cache/
 
 # Output
 output/
