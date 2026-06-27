@@ -1,173 +1,191 @@
-# sci-craft
+# sci-craft — 多期刊、多平台兼容的学术写作 Skill 框架
 
-> Multi-journal, multi-platform academic writing Skill framework
+> 分层架构的学术写作 Skill 框架，一次编写，多平台运行
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Platform: TRAE](https://img.shields.io/badge/platform-TRAE-green.svg)](https://www.trae.cn)
-[![Platform: Codex](https://img.shields.io/badge/platform-Codex-orange.svg)](https://openai.com/index/introducing-codex-cli/)
-[![Platform: Claude Code](https://img.shields.io/badge/platform-Claude_Code-purple.svg)](https://docs.anthropic.com/en/docs/claude-code/overview)
+[![Python 3.10+](https://img.shields.io/badge/python-3.10+-blue.svg)](https://www.python.org/downloads/)
+[![Tests](https://github.com/wyt1017/sci-craft/actions/workflows/validate.yml/badge.svg)](https://github.com/wyt1017/sci-craft/actions)
 
-## Overview
+## 概述
 
-sci-craft is a layered architecture for academic writing Skills that supports **Nature** and **Science** journals natively, with adapters for **TRAE**, **Codex**, and **Claude Code** platforms.
+sci-craft 是一个面向科研写作的 Skill 框架，支持 **Nature** 和 **Science** 两大顶级期刊的写作规范，并兼容 **TRAE**、**Codex** 和 **Claude Code** 三个 AI 编程平台。
 
-Once written, a Skill automatically adapts to different platforms and journal requirements.
+### 核心特性
 
-## Architecture
+- **多期刊支持**：Nature（30 词/句、英式英语、3 级模糊度）与 Science（25 词/句、美式英语、4 级模糊度）一键切换
+- **多平台兼容**：同一套 Skill 通过适配器自动转换为不同平台的格式
+- **框架图绘制**：使用 Graphviz dot 语言生成可编辑 SVG 框架图（填补主流工具空白）
+- **16 个 Skill**：覆盖文献检索→阅读→摘要→空白识别→课题生成→写作→润色→投稿全流程
+- **自动化测试**：26 个单元测试 + CI 自动校验
 
-Four-layer design:
+## 快速开始
 
-1. **Core Layer** — Journal configurations (YAML) + Rules library (Markdown)
-2. **Skill Layer** — 16 functional modules covering the full research workflow
-3. **Builder Layer** — Assembler (config merging + rule injection) + Validator (completeness checks)
-4. **Adapter Layer** — Platform converters (TRAE, Codex, Claude Code)
-
-```
-┌─────────────────────────────────────┐
-│           Adapter Layer             │  ← TRAE / Codex / Claude Code
-├─────────────────────────────────────┤
-│            Skill Layer              │  ← 16 Skills
-├─────────────────────────────────────┤
-│          Builder Layer              │  ← Assembler + Validator
-├─────────────────────────────────────┤
-│            Core Layer               │  ← Journals + Rules + Templates
-└─────────────────────────────────────┘
-```
-
-## Skills
-
-### Stable (Production-ready)
-
-| Skill | Description | Journal-aware |
-|-------|-------------|---------------|
-| `sci-figure` | Journal-quality scientific figures with Nature/Science palettes | Yes |
-| `sci-framework` | Graphviz-based framework diagrams (core differentiator) | Yes |
-| `sci-polishing` | 12-step academic prose polishing workflow | Yes |
-
-### Beta (Testing)
-
-| Skill | Description | Journal-aware |
-|-------|-------------|---------------|
-| `sci-writing` | Section-by-section manuscript drafting | Yes |
-| `sci-citation` | Literature search and citation management | Yes |
-| `sci-reviewer` | Simulated peer review (3 independent reports) | Yes |
-| `sci-response` | Point-by-point reviewer response letters | Yes |
-| `bibliometrics-analyzer` | Co-occurrence, burst detection, collaboration networks | No |
-| `literature-search` | PICO/SPIDER framework, multi-database search | No |
-| `literature-summarizer` | Four-layer summarization, knowledge graphs | No |
-| `research-gap-finder` | Five-dimensional gap matrix, contradiction analysis | No |
-| `research-ideation` | Gap-to-idea conversion, priority ranking | No |
-| `systematic-review` | PRISMA workflow, meta-analysis support | No |
-
-### Draft (Development)
-
-| Skill | Description |
-|-------|-------------|
-| `sci-reader` | Bilingual paper reader with source anchors |
-| `sci-paper2ppt` | Paper-to-PPTX generation |
-| `sci-data` | Data availability statements, FAIR compliance |
-
-## Quick Start
-
-### Installation
+### 安装到 TRAE
 
 ```bash
-# Clone the repository
-git clone https://github.com/wyt1017/sci-craft.git
-cd sci-craft
-
-# Install dependencies
-pip install pyyaml pytest
-
-# Build for Nature journal on TRAE
+# 构建并安装（Nature 期刊）
 python scripts/build.py --journal nature --platform trae
-
-# Install to TRAE skills directory
 python scripts/install.py --journal nature --platform trae
+
+# 或一步到位
+python scripts/build.py --journal nature --platform trae --install
 ```
 
-### Usage in TRAE
+### 安装到 Codex
 
-Once installed, trigger a skill by saying:
-- "Polish this abstract to Nature style"
-- "Draw a model architecture diagram"
-- "Write an introduction for a paper about [topic]"
+```bash
+python scripts/build.py --journal nature --platform codex
+python scripts/install.py --journal nature --platform codex
+```
 
-## Platform Support
+### 安装到 Claude Code
 
-| Platform | Adapter | Install Path |
-|----------|---------|--------------|
-| TRAE | `adapters/trae.py` | `~/.trae/skills/` |
-| Codex | `adapters/codex.py` | `~/.codex/skills/` |
-| Claude Code | `adapters/claude.py` | Project root |
+```bash
+python scripts/build.py --journal nature --platform claude
+python scripts/install.py --journal nature --platform claude
+```
 
-## Journal Support
-
-| Journal | Config | Citation Style | Max Sentence | DPI |
-|---------|--------|----------------|--------------|-----|
-| Nature | `core/journals/nature.yaml` | Numbered superscript | 30 words | 300 |
-| Science | `core/journals/science.yaml` | Superscript numbers | 25 words | 600 |
-
-## Key Differentiators vs nature-skills
-
-| Feature | nature-skills | sci-craft |
-|---------|---------------|-----------|
-| Framework diagrams | No | Yes (sci-framework) |
-| Multi-journal | Nature only | Nature + Science |
-| Multi-platform | Manual copy | Auto-adapt via adapters |
-| Quality assurance | None | Validator + CI + tests |
-| Chinese support | Weak | Dedicated rules |
-| Research workflow | Limited | 16 skills covering full pipeline |
-
-## Project Structure
+## 架构设计
 
 ```
 sci-craft/
-├── core/                    # Core layer
-│   ├── journals/            # Journal YAML configs
-│   ├── rules/               # Markdown rules (writing/figure/citation)
-│   └── templates/           # Python template scripts
-├── skills/                  # Skill layer
-│   ├── _shared/             # Shared resources
-│   ├── sci-figure/          # Scientific figures
-│   ├── sci-framework/       # Framework diagrams
-│   ├── sci-polishing/       # Text polishing
-│   └── ...                  # 13 more skills
-├── builder/                 # Builder layer
-│   ├── assembler.py         # Config merging + rule injection
-│   └── validator.py         # Completeness checks
-├── adapters/                # Adapter layer
-│   ├── base.py              # Base adapter interface
-│   ├── trae.py              # TRAE adapter
-│   ├── codex.py             # Codex adapter
-│   └── claude.py            # Claude Code adapter
-├── scripts/                 # Build and install scripts
-│   ├── build.py
-│   └── install.py
-├── tests/                   # pytest test suite
-├── docs/                    # Design specs and plans
-└── .github/workflows/       # CI validation
+├── core/                    # 核心层
+│   ├── journals/            # 期刊配置（YAML）
+│   │   ├── _base.yaml       # 通用基线
+│   │   ├── nature.yaml      # Nature 规范
+│   │   └── science.yaml     # Science 规范
+│   ├── rules/               # 规则库
+│   │   ├── writing/         # 写作规则
+│   │   ├── figure/          # 图表规则
+│   │   └── citation/        # 引文规则
+│   ├── templates/           # 图表模板脚本
+│   └── skills/              # 预置 Skill 模板
+├── skills/                  # Skill 层（16 个）
+│   ├── _shared/             # 共享资源
+│   ├── sci-figure/          # 科研图表（Stable）
+│   ├── sci-framework/       # 框架图绘制（Stable）
+│   ├── sci-polishing/       # 文本润色（Stable）
+│   ├── sci-writing/         # 论文写作（Beta）
+│   ├── sci-citation/        # 文献引文（Beta）
+│   ├── sci-reviewer/        # 模拟审稿（Beta）
+│   ├── sci-response/        # 审稿回复（Beta）
+│   ├── sci-reader/          # 论文阅读（Draft）
+│   ├── sci-paper2ppt/       # 论文转PPT（Draft）
+│   ├── sci-data/            # 数据声明（Draft）
+│   ├── bibliometrics-analyzer/
+│   ├── literature-search/
+│   ├── literature-summarizer/
+│   ├── research-gap-finder/
+│   ├── research-ideation/
+│   └── systematic-review/
+├── builder/                 # 构建层
+│   ├── assembler.py         # 规则组装器
+│   └── validator.py         # Skill 校验器
+├── adapters/                # 适配层
+│   ├── base.py              # 适配器基类
+│   ├── trae.py              # TRAE 适配器
+│   ├── codex.py             # Codex 适配器
+│   └── claude.py            # Claude Code 适配器
+├── scripts/                 # 构建脚本
+│   ├── build.py             # 构建入口
+│   └── install.py           # 安装脚本
+├── tests/                   # 测试（26 个）
+└── .github/workflows/       # CI 配置
 ```
 
-## Development
+## Skill 清单
+
+### Stable（稳定版）
+
+| Skill | 描述 | 期刊感知 |
+|-------|------|---------|
+| `sci-figure` | Nature/Science 双配色科研图表 | ✅ |
+| `sci-framework` | Graphviz 框架图绘制（核心差异化） | ✅ |
+| `sci-polishing` | 12步学术润色工作流 | ✅ |
+
+### Beta（测试版）
+
+| Skill | 描述 | 期刊感知 |
+|-------|------|---------|
+| `sci-writing` | 论文各章节撰写 | ✅ |
+| `sci-citation` | 文献检索与引文管理 | ✅ |
+| `sci-reviewer` | 生成3份独立审稿报告 | ✅ |
+| `sci-response` | 逐条审稿回复信撰写 | ✅ |
+| `bibliometrics-analyzer` | 文献计量分析 | ❌ |
+| `literature-search` | PICO/SPIDER 文献检索 | ❌ |
+| `literature-summarizer` | 四层分层摘要 | ❌ |
+| `research-gap-finder` | 五维空白矩阵 | ❌ |
+| `research-ideation` | 空白→课题转化 | ❌ |
+| `systematic-review` | PRISMA 系统综述 | ❌ |
+
+### Draft（草稿版）
+
+| Skill | 描述 | 期刊感知 |
+|-------|------|---------|
+| `sci-reader` | 双语论文阅读器 | ❌ |
+| `sci-paper2ppt` | 论文转中文PPT | ❌ |
+| `sci-data` | 数据可用性声明 | ✅ |
+
+## 期刊配置
+
+### Nature
+- 句子长度：≤ 30 词
+- 英语变体：英式
+- 模糊度：3 级
+- 图表 DPI：300
+- 配色：Nature Blue/Green/Red/Orange/Purple/Gray
+
+### Science
+- 句子长度：≤ 25 词
+- 英语变体：美式
+- 模糊度：4 级
+- 图表 DPI：600
+- 配色：Science Teal/Vermilion/Green/Gold/Violet/Gray
+
+## 多平台适配
+
+| 平台 | 适配器 | 安装路径 | 特殊处理 |
+|------|--------|---------|---------|
+| TRAE | `adapters/trae.py` | `~/.trae/skills/` | 完整复制 |
+| Codex | `adapters/codex.py` | `~/.codex/skills/` | 移除 manifest.yaml |
+| Claude Code | `adapters/claude.py` | 项目根目录 | 重命名 SKILL.md → CLAUDE.md，内联 _shared |
+
+## 开发
+
+### 运行测试
 
 ```bash
-# Run all tests
 python -m pytest tests/ -v
-
-# Validate all skills
-python scripts/build.py --validate-only
-
-# Build for Science journal
-python scripts/build.py --journal science --platform trae
-
-# Build for all platforms
-python scripts/build.py --journal nature --platform trae
-python scripts/build.py --journal nature --platform codex
-python scripts/build.py --journal nature --platform claude
 ```
+
+### 验证 Skill
+
+```bash
+python scripts/build.py --validate-only
+```
+
+### 构建单个 Skill
+
+```bash
+python scripts/build.py --journal nature --skill sci-polishing
+```
+
+## 与 nature-skills 对比
+
+| 维度 | nature-skills | sci-craft |
+|------|--------------|-----------|
+| 期刊覆盖 | 仅 Nature | Nature + Science + 可扩展 |
+| 框架图 | ❌ | ✅ sci-framework |
+| 多平台 | 手动复制 | 适配器自动转换 |
+| 自动化测试 | ❌ | ✅ 26 个测试 + CI |
+| 中文支持 | 弱 | ✅ chinese-academic.md |
+| 安装方式 | 手动 | ✅ scripts/install.py |
 
 ## License
 
-MIT License
+MIT License. See [LICENSE](LICENSE) for details.
+
+## 项目文档
+
+- [设计文档](docs/superpowers/specs/2026-06-26-sci-craft-design.md)
+- [实施计划](docs/superpowers/plans/2026-06-26-sci-craft-phase1.md)
