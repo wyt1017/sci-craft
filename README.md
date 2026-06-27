@@ -170,17 +170,6 @@ python scripts/build.py --validate-only
 python scripts/build.py --journal nature --skill sci-polishing
 ```
 
-## 与 nature-skills 对比
-
-| 维度 | nature-skills | sci-craft |
-|------|--------------|-----------|
-| 期刊覆盖 | 仅 Nature | Nature + Science + 可扩展 |
-| 框架图 | ❌ | ✅ sci-framework |
-| 多平台 | 手动复制 | 适配器自动转换 |
-| 自动化测试 | ❌ | ✅ 26 个测试 + CI |
-| 中文支持 | 弱 | ✅ chinese-academic.md |
-| 安装方式 | 手动 | ✅ scripts/install.py |
-
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
