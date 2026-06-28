@@ -51,8 +51,13 @@ class ClaudeAdapter(BaseAdapter):
                 logger.warning(f"Failed to remove manifest.yaml from '{skill_name}': {e}")
 
         # Inline shared resources if they exist
-        # _shared is placed alongside the skill in output/_temp/ by build.py
+        # _shared is placed alongside temp skill dirs by build.py
+        # Try multiple fallback paths for robustness
         shared_dir = skill_dir.parent / "_shared"
+        if not shared_dir.exists():
+            shared_dir = output_dir / "_shared"
+        if not shared_dir.exists():
+            shared_dir = output_dir.parent / "_shared"
         if shared_dir.exists() and claude_md.exists():
             try:
                 shared_content = self._read_shared(shared_dir)

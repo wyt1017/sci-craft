@@ -2,7 +2,7 @@ name: Validate Skills
 
 on:
   push:
-    branches: [main]
+    branches: [master]
     paths:
       - 'skills/**'
       - 'core/**'
@@ -11,7 +11,7 @@ on:
       - 'scripts/**'
       - 'tests/**'
   pull_request:
-    branches: [main]
+    branches: [master]
 
 jobs:
   validate:
@@ -38,6 +38,9 @@ jobs:
 
       - name: Install dependencies
         run: pip install ".[dev]"
+
+      - name: Check code style with ruff
+        run: python -m ruff check .
 
       - name: Run tests with coverage
         run: python -m pytest tests/ -v --cov=. --cov-report=xml

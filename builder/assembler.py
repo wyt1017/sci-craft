@@ -145,12 +145,12 @@ class Assembler:
                 if placeholder in rule_content:
                     rule_content = rule_content.replace(placeholder, str(value))
                 # Also render _list suffix for list values
-                list_placeholder = "{{" + key + "_list}}"
-                if list_placeholder in rule_content:
-                    rule_content = rule_content.replace(
-                        list_placeholder,
-                        repr(value) if isinstance(value, list) else str(value),
-                    )
+                elif list_placeholder := "{{" + key + "_list}}":
+                    if list_placeholder in rule_content:
+                        rule_content = rule_content.replace(
+                            list_placeholder,
+                            repr(value) if isinstance(value, list) else str(value),
+                        )
             rule_sections.append(rule_content)
 
         return content.replace(injection_point, "\n\n---\n\n".join(rule_sections))

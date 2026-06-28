@@ -1,8 +1,13 @@
 """Install script — copy built skills to the target platform's skill directory."""
 import argparse
+import logging
 import shutil
 import sys
 from pathlib import Path
+
+# Configure logging
+logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
+logger = logging.getLogger(__name__)
 
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
@@ -33,7 +38,7 @@ def install(journal: str, platform: str, skill: str | None = None, force: bool =
     """
     adapter_cls = ADAPTERS.get(platform)
     if not adapter_cls:
-        print(f"ERROR: Unknown platform: {platform}")
+        logger.error("Unknown platform: %s", platform)
         return False
 
     adapter = adapter_cls()
@@ -41,14 +46,14 @@ def install(journal: str, platform: str, skill: str | None = None, force: bool =
 
     source_dir = OUTPUT_DIR / platform / journal
     if not source_dir.exists():
-        print(f"ERROR: No built output found at {source_dir}. Run build first.")
+        logger.error("No built output found at %s. Run build first.", source_dir)
         return False
 
     # Determine which skills to install
     if skill:
         skill_dirs = [source_dir / skill]
         if not skill_dirs[0].exists():
-            print(f"ERROR: Skill not found in output: {skill}")
+            logger.error("Skill not found in output: %s", skill)
             return False
     else:
         skill_dirs = [d for d in source_dir.iterdir() if d.is_dir()]
@@ -62,12 +67,12 @@ def install(journal: str, platform: str, skill: str | None = None, force: bool =
             if force:
                 shutil.rmtree(dest)
                 shutil.copytree(src, dest)
-                print(f"OVERRIDDEN: {src.name} → {dest}")
+                logger.info("Overridden: %s → %s", src.name, dest)
             else:
-                print(f"SKIP: {src.name} (already exists, use --force to overwrite)")
+                logger.info("Skipped: %s (already exists, use --force to overwrite)", src.name)
         else:
             shutil.copytree(src, dest)
-            print(f"INSTALLED: {src.name} → {dest}")
+            logger.info("Installed: %s → %s", src.name, dest)
 
     # Also install _shared if it exists
     shared_source = PROJECT_ROOT / "skills" / "_shared"
@@ -77,12 +82,12 @@ def install(journal: str, platform: str, skill: str | None = None, force: bool =
             if force:
                 shutil.rmtree(shared_dest)
                 shutil.copytree(shared_source, shared_dest)
-                print(f"OVERRIDDEN: _shared → {shared_dest}")
+                logger.info("Overridden: _shared → %s", shared_dest)
             else:
-                print(f"SKIP: _shared (already exists, use --force to overwrite)")
+                logger.info("Skipped: _shared (already exists, use --force to overwrite)")
         else:
             shutil.copytree(shared_source, shared_dest)
-            print(f"INSTALLED: _shared → {shared_dest}")
+            logger.info("Installed: _shared → %s", shared_dest)
 
     return True
 

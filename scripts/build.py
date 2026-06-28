@@ -44,15 +44,15 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
     """
     skill_dir = SKILLS_DIR / skill_name
     if not skill_dir.exists():
-        print(f"ERROR: Skill not found: {skill_name}")
+        logger.error("Skill not found: %s", skill_name)
         return False
 
     # Validate
     errors = validate_skill(skill_dir)
     if errors:
-        print(f"VALIDATION FAILED for {skill_name}:")
+        logger.error("VALIDATION FAILED for %s:", skill_name)
         for e in errors:
-            print(f"  - {e}")
+            logger.error("  - %s", e)
         return False
 
     # Assemble
@@ -81,15 +81,14 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
         # Adapt
         adapter_cls = ADAPTERS.get(platform)
         if not adapter_cls:
-            print(f"ERROR: Unknown platform: {platform}")
+            logger.error("Unknown platform: %s", platform)
             return False
 
         adapter = adapter_cls()
         platform_output = output_dir / platform / journal
         platform_output.mkdir(parents=True, exist_ok=True)
         adapter.adapt_skill(temp_skill_dir, platform_output)
-
-        print(f"OK: {skill_name} → {platform}/{journal}/")
+        logger.info("Built: %s → %s/%s/", skill_name, platform, journal)
         return True
 
     finally:
@@ -112,12 +111,12 @@ def main():
             skill_dir = SKILLS_DIR / name
             errors = validate_skill(skill_dir)
             if errors:
-                print(f"FAIL: {name}")
+                logger.error("FAIL: %s", name)
                 for e in errors:
-                    print(f"  - {e}")
+                    logger.error("  - %s", e)
                 all_valid = False
             else:
-                print(f"PASS: {name}")
+                logger.info("PASS: %s", name)
         sys.exit(0 if all_valid else 1)
 
     # Build mode requires journal and platform
