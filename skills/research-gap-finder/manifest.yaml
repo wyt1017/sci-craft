@@ -10,7 +10,10 @@ triggers:
   - "矛盾发现"
   - "identify gap"
   - "识别空白"
-rules: []
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/overclaim-detect
 references: []
 feedback:
   bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md

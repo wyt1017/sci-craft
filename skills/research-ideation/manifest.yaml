@@ -11,7 +11,11 @@ triggers:
   - "课题提案"
   - "generate ideas"
   - "生成研究想法"
-rules: []
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/tense
+  - writing/overclaim-detect
 references: []
 feedback:
   bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md

@@ -11,7 +11,9 @@ triggers:
   - "research trend"
   - "研究趋势"
   - "bibliometric analysis"
-rules: []
+rules:
+  - writing/sentence-length
+  - writing/tense
 references: []
 feedback:
   bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md

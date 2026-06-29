@@ -11,7 +11,10 @@ triggers:
   - "阅读笔记"
   - "knowledge graph"
   - "知识图谱"
-rules: []
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/tense
 references: []
 feedback:
   bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md

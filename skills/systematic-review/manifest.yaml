@@ -11,7 +11,12 @@ triggers:
   - "文献综述"
   - "evidence synthesis"
   - "证据合成"
-rules: []
+rules:
+  - writing/sentence-length
+  - writing/hedging
+  - writing/tense
+  - writing/overclaim-detect
+  - citation/integrity
 references: []
 feedback:
   bug_report: https://github.com/wyt1017/sci-craft/issues/new?template=bug-report.md
