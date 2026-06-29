@@ -14,9 +14,11 @@ sys.path.insert(0, str(PROJECT_ROOT))
 
 OUTPUT_DIR = PROJECT_ROOT / "output"
 
+# isort: off
 from adapters.trae import TraeAdapter
 from adapters.codex import CodexAdapter
 from adapters.claude import ClaudeAdapter
+# isort: on
 
 ADAPTERS = {
     "trae": TraeAdapter,

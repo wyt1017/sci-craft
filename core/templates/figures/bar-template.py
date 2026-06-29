@@ -2,7 +2,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-
 # Default palettes per journal
 DEFAULT_PALETTES = {
     "nature": ["#0C5DA5", "#00B945", "#FF2C00", "#FF9500", "#845B97", "#474747"],
@@ -63,7 +62,11 @@ def create_bar_chart(
     fig, ax = plt.subplots(figsize=figsize)
     for i, (series_name, values) in enumerate(data.items()):
         offset = (i - n_series / 2 + 0.5) * width
-        ax.bar(x + offset, values, width, label=series_name, color=palette[i % len(palette)], linewidth=0.5, edgecolor="white")
+        ax.bar(
+            x + offset, values, width, label=series_name,
+            color=palette[i % len(palette)],
+            linewidth=0.5, edgecolor="white",
+        )
 
     ax.set_xticks(x)
     ax.set_xticklabels(labels)

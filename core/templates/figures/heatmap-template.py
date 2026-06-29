@@ -1,7 +1,5 @@
 """Heatmap template for journal-quality figures."""
 import matplotlib.pyplot as plt
-import numpy as np
-
 
 # Default fonts
 DEFAULT_FONTS = {
@@ -60,7 +58,13 @@ def create_heatmap(
     if annotate:
         for i in range(len(row_labels)):
             for j in range(len(col_labels)):
-                ax.text(j, i, format(data[i][j], fmt), ha="center", va="center", fontsize=6, color="black" if abs(data[i][j]) < 0.5 else "white")
+                val = data[i][j]
+                color = "black" if abs(val) < 0.5 else "white"
+                ax.text(
+                    j, i, format(val, fmt),
+                    ha="center", va="center",
+                    fontsize=6, color=color,
+                )
 
     if title:
         ax.set_title(title, fontsize=9, fontweight="bold", loc="left")

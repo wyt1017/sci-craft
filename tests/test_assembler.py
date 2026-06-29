@@ -2,9 +2,7 @@
 import tempfile
 from pathlib import Path
 
-import yaml
-
-from builder.assembler import Assembler, load_journal_config, _deep_merge, _flatten
+from builder.assembler import Assembler, _deep_merge, _flatten, load_journal_config
 
 
 def test_load_journal_config_nature():

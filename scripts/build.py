@@ -10,11 +10,13 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(PROJECT_ROOT))
 
+# isort: off
 from adapters.trae import TraeAdapter
 from adapters.codex import CodexAdapter
 from adapters.claude import ClaudeAdapter
 from builder.assembler import Assembler
 from builder.validator import validate_skill
+# isort: on
 
 logger = logging.getLogger(__name__)
 

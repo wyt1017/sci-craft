@@ -4,7 +4,6 @@ from pathlib import Path
 
 import yaml
 
-
 REQUIRED_MANIFEST_FIELDS = ["name", "version", "status", "triggers"]
 VALID_STATUSES = {"stable", "beta", "experimental", "draft"}
 

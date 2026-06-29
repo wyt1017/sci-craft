@@ -1,13 +1,12 @@
 """Tests for adapters/"""
-import shutil
 import tempfile
 from pathlib import Path
 
 import yaml
 
-from adapters.trae import TraeAdapter
-from adapters.codex import CodexAdapter
 from adapters.claude import ClaudeAdapter
+from adapters.codex import CodexAdapter
+from adapters.trae import TraeAdapter
 
 
 def _make_skill_dir(tmpdir: Path) -> Path:

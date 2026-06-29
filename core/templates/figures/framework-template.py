@@ -1,6 +1,5 @@
 """Framework diagram template using Graphviz dot."""
 import subprocess
-import tempfile
 from pathlib import Path
 
 # Graphviz-compatible shapes (cylinder is not natively supported)

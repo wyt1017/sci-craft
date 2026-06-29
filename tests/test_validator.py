@@ -4,10 +4,11 @@ from pathlib import Path
 
 import yaml
 
-from builder.validator import validate_skill, ValidationError, VALID_STATUSES
+from builder.validator import VALID_STATUSES, validate_skill
 
 
-def _make_skill(tmpdir: Path, has_skill_md=True, has_manifest=True, has_readme=True, skill_md_content="# Skill", manifest_content=None, extra_files=None):
+def _make_skill(tmpdir: Path, has_skill_md=True, has_manifest=True, has_readme=True,
+                skill_md_content="# Skill", manifest_content=None, extra_files=None):
     """Helper to create a minimal skill directory."""
     skill_dir = tmpdir / "test-skill"
     skill_dir.mkdir(exist_ok=True)
