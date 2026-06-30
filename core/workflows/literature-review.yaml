@@ -1,0 +1,23 @@
+name: literature-review
+description: 文献检索 → 阅读 → 摘要 → 空白识别 全流程
+steps:
+  - id: step1
+    skill: literature-search
+    journal: nature
+    platform: trae
+    config:
+      query: "deep learning medical imaging"
+
+  - id: step2
+    skill: literature-summarizer
+    journal: nature
+    platform: trae
+    depends_on: [step1]
+    config:
+      depth: full
+
+  - id: step3
+    skill: research-gap-finder
+    journal: nature
+    platform: trae
+    depends_on: [step2]

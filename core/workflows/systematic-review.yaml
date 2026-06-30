@@ -1,0 +1,37 @@
+name: systematic-review
+description: 系统性文献综述流程：检索 → 篮选 → 分析 → 总结
+steps:
+  - id: search
+    skill: literature-search
+    journal: nature
+    platform: trae
+    config:
+      query: "{{review_topic}}"
+      max_results: 500
+
+  - id: screen
+    skill: systematic-review
+    journal: nature
+    platform: trae
+    depends_on: [search]
+    config:
+      inclusion_criteria:
+        - peer-reviewed
+        - recent (last 5 years)
+      exclusion_criteria:
+        - non-english
+
+  - id: analyze
+    skill: bibliometrics-analyzer
+    journal: nature
+    platform: trae
+    depends_on: [screen]
+
+  - id: summarize
+    skill: literature-summarizer
+    journal: nature
+    platform: trae
+    depends_on: [analyze]
+    config:
+      depth: full
+      output_format: structured

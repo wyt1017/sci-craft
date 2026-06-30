@@ -1,0 +1,45 @@
+name: full-pipeline
+description: 完整学术写作流程：文献调研 → 数据处理 → 图表制作 → 写作润色
+steps:
+  - id: lit_review
+    skill: literature-search
+    journal: nature
+    platform: trae
+    config:
+      query: "{{research_topic}}"
+
+  - id: summarize
+    skill: literature-summarizer
+    journal: nature
+    platform: trae
+    depends_on: [lit_review]
+
+  - id: gap_analysis
+    skill: research-gap-finder
+    journal: nature
+    platform: trae
+    depends_on: [summarize]
+
+  - id: data_prep
+    skill: sci-data
+    journal: nature
+    platform: trae
+    depends_on: [gap_analysis]
+
+  - id: figure_design
+    skill: sci-figure
+    journal: nature
+    platform: trae
+    depends_on: [data_prep]
+
+  - id: writing
+    skill: sci-writing
+    journal: nature
+    platform: trae
+    depends_on: [gap_analysis, figure_design]
+
+  - id: polishing
+    skill: sci-polishing
+    journal: nature
+    platform: trae
+    depends_on: [writing]
