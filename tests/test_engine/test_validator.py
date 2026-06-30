@@ -3,10 +3,9 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pytest
 import yaml
 
-from engine.validator import StaticValidation, RuntimeValidation, ValidationError
+from engine.validator import RuntimeValidation, StaticValidation, ValidationError
 
 
 def test_static_validation_init():

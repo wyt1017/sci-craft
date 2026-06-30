@@ -3,7 +3,6 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pytest
 import yaml
 
 from engine.renderer import Renderer, flatten_config

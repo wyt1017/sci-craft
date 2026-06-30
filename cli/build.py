@@ -2,7 +2,6 @@
 
 import argparse
 from pathlib import Path
-from sys import stdout
 
 from engine.cache import DependencyCache
 from engine.planner import BuildPlanner

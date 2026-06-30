@@ -4,7 +4,6 @@ import hashlib
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pytest
 import yaml
 
 from engine.cache import DependencyCache, DepNode

@@ -6,7 +6,7 @@ from tempfile import TemporaryDirectory
 import pytest
 import yaml
 
-from engine.workflow import WorkflowEngine, WorkflowDef, StepDef, WorkflowResult
+from engine.workflow import StepDef, WorkflowDef, WorkflowEngine
 
 
 def test_step_def():

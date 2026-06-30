@@ -2,9 +2,8 @@
 
 from dataclasses import dataclass
 from pathlib import Path
-from typing import Optional
 
-from .cache import DependencyCache, DepNode
+from .cache import DependencyCache
 
 
 @dataclass

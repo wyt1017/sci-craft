@@ -1,7 +1,6 @@
 """Jinja2 template rendering engine."""
 
 from pathlib import Path
-from typing import Any
 
 import yaml
 from jinja2 import Environment, FileSystemLoader

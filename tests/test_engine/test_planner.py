@@ -3,11 +3,10 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 
-import pytest
 import yaml
 
-from engine.cache import DependencyCache, DepNode
-from engine.planner import BuildPlanner, BuildPlan
+from engine.cache import DependencyCache
+from engine.planner import BuildPlan, BuildPlanner
 
 
 def test_build_plan():
