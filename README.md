@@ -16,7 +16,7 @@ sci-craft 是一个面向科研写作的 Skill 框架，支持 **Nature** 和 **
 - **多平台兼容**：同一套 Skill 通过适配器自动转换为不同平台的格式
 - **框架图绘制**：使用 Graphviz dot 语言生成可编辑 SVG 框架图（填补主流工具空白）
 - **16 个 Skill**：覆盖文献检索→阅读→摘要→空白识别→课题生成→写作→润色→投稿全流程（3 Stable + 10 Beta + 3 Draft）
-- **自动化测试**：26 个单元测试 + CI 自动校验
+- **自动化测试**：45+ 单元测试 + CI 自动校验
 
 ## 快速开始
 
@@ -24,25 +24,25 @@ sci-craft 是一个面向科研写作的 Skill 框架，支持 **Nature** 和 **
 
 ```bash
 # 构建并安装（Nature 期刊）
-python scripts/build.py --journal nature --platform trae
-python scripts/install.py --journal nature --platform trae
+python -m scripts.build --journal nature --platform trae
+python -m scripts.install.py --journal nature --platform trae
 
 # 或一步到位
-python scripts/build.py --journal nature --platform trae --install
+python -m scripts.build --journal nature --platform trae --install
 ```
 
 ### 安装到 Codex
 
 ```bash
-python scripts/build.py --journal nature --platform codex
-python scripts/install.py --journal nature --platform codex
+python -m scripts.build --journal nature --platform codex
+python -m scripts.install.py --journal nature --platform codex
 ```
 
 ### 安装到 Claude Code
 
 ```bash
-python scripts/build.py --journal nature --platform claude
-python scripts/install.py --journal nature --platform claude
+python -m scripts.build --journal nature --platform claude
+python -m scripts.install.py --journal nature --platform claude
 ```
 
 ## 架构设计
@@ -89,7 +89,7 @@ sci-craft/
 ├── scripts/                 # 构建脚本
 │   ├── build.py             # 构建入口
 │   └── install.py           # 安装脚本
-├── tests/                   # 测试（26 个）
+├── tests/                   # 测试（45+ 个）
 └── .github/workflows/       # CI 配置
 ```
 
@@ -161,13 +161,19 @@ python -m pytest tests/ -v
 ### 验证 Skill
 
 ```bash
-python scripts/build.py --validate-only
+python -m scripts.build --validate-only
 ```
 
 ### 构建单个 Skill
 
 ```bash
-python scripts/build.py --journal nature --skill sci-polishing
+python -m scripts.build --journal nature --skill sci-polishing
+```
+
+### 构建所有 Skill
+
+```bash
+python -m scripts.build --journal nature --platform trae
 ```
 
 ## License
