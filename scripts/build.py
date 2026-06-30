@@ -68,8 +68,8 @@ def build_skill(skill_name: str, journal: str, platform: str, output_dir: Path) 
     temp_skill_dir = Path(temp_skill_dir)
 
     try:
-        # Copy skill to temp dir
-        shutil.copytree(skill_dir, temp_skill_dir)
+        # Copy skill to temp dir (mkdtemp creates empty dir, copytree expects non-existent dst or empty dst)
+        shutil.copytree(skill_dir, temp_skill_dir, dirs_exist_ok=True)
 
         # Also copy _shared for adapters that need it (e.g., Claude)
         shared_source = SKILLS_DIR / "_shared"
