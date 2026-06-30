@@ -2,7 +2,7 @@
 
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Optional
+from typing import Optional
 
 import yaml
 
@@ -193,7 +193,6 @@ class WorkflowEngine:
             List of step groups (each group can be executed in parallel)
         """
         # Build dependency graph
-        step_map = {step.id: step for step in steps}
         in_degree = {step.id: 0 for step in steps}
 
         for step in steps:
@@ -246,7 +245,6 @@ class WorkflowEngine:
         execution_order = self.resolve_dependencies(workflow_def.steps)
 
         step_results = []
-        step_outputs: dict[str, str] = {}
 
         for level, step_ids in enumerate(execution_order):
             for step_id in step_ids:

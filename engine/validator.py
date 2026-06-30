@@ -79,19 +79,22 @@ class StaticValidation:
 
         # Check for id (optional but recommended for new manifests)
         if "id" not in manifest and "name" not in manifest:
-            errors.append(ValidationError("error", "Missing identifier: either 'id' or 'name' field required", manifest_path))
+            msg = "Missing identifier: either 'id' or 'name' field required"
+            errors.append(ValidationError("error", msg, manifest_path))
 
         # Validate version format (semver)
         if "version" in manifest:
             version_pattern = r"^\d+\.\d+\.\d+$"
             if not re.match(version_pattern, str(manifest["version"])):
-                errors.append(ValidationError("warning", f"Version should be semver format (x.y.z): {manifest['version']}", manifest_path))
+                msg = f"Version should be semver format (x.y.z): {manifest['version']}"
+                errors.append(ValidationError("warning", msg, manifest_path))
 
         # Validate status
         if "status" in manifest:
             valid_statuses = ["active", "deprecated", "draft", "stable", "beta", "alpha", "experimental"]
             if manifest["status"] not in valid_statuses:
-                errors.append(ValidationError("warning", f"Non-standard status: {manifest['status']}. Recommended: active, deprecated, draft", manifest_path))
+                msg = f"Non-standard status: {manifest['status']}. Recommended: active, deprecated, draft"
+                errors.append(ValidationError("warning", msg, manifest_path))
 
         # Check triggers non-empty
         if "triggers" in manifest:
@@ -185,7 +188,8 @@ class StaticValidation:
 
             value = get_nested_value(config, var)
             if value is None:
-                errors.append(ValidationError("warning", f"Template variable not found in config: {var}", skill_md_path))
+                msg = f"Template variable not found in config: {var}"
+                errors.append(ValidationError("warning", msg, skill_md_path))
 
         return errors
 
