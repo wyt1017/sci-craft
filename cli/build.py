@@ -231,8 +231,11 @@ def main():
         )
         total = len(list((project_dir / "skills").glob("*")))
         if not args.incremental:
-            total = sum(1 for d in (project_dir / "skills").glob("*")
-                       if d.is_dir() and not d.name.startswith("_") and (d / "manifest.yaml").exists())
+            total = sum(
+                1
+                for d in (project_dir / "skills").glob("*")
+                if d.is_dir() and not d.name.startswith("_") and (d / "manifest.yaml").exists()
+            )
         print(f"\n✓ Successfully built {success_count}/{total} skills")
 
     return 0

@@ -1,4 +1,5 @@
 """Install script — copy built skills to the target platform's skill directory."""
+
 import argparse
 import logging
 import shutil

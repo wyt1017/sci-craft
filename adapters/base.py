@@ -1,4 +1,5 @@
 """Base adapter interface for multi-platform skill conversion."""
+
 from abc import ABC, abstractmethod
 from pathlib import Path
 

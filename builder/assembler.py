@@ -1,4 +1,5 @@
 """Skill assembler — combines journal config + rules + SKILL.md template."""
+
 from copy import deepcopy
 from pathlib import Path
 

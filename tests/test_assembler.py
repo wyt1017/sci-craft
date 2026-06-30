@@ -1,4 +1,5 @@
 """Tests for builder/assembler.py"""
+
 import tempfile
 from pathlib import Path
 
@@ -44,9 +45,7 @@ def test_assembler_renders_science():
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "test-skill"
         skill_dir.mkdir()
-        (skill_dir / "SKILL.md").write_text(
-            "# Test\n{{max_sentence_words}} {{english_variant}}\n"
-        )
+        (skill_dir / "SKILL.md").write_text("# Test\n{{max_sentence_words}} {{english_variant}}\n")
 
         assembler = Assembler(Path("core"))
         result = assembler.assemble("science", skill_dir)
@@ -57,12 +56,8 @@ def test_assembler_injects_rules():
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "test-skill"
         skill_dir.mkdir()
-        (skill_dir / "SKILL.md").write_text(
-            "# Test\n{{RULES_INJECTION_POINT}}\n"
-        )
-        (skill_dir / "manifest.yaml").write_text(
-            "rules:\n  - writing/sentence-length\n"
-        )
+        (skill_dir / "SKILL.md").write_text("# Test\n{{RULES_INJECTION_POINT}}\n")
+        (skill_dir / "manifest.yaml").write_text("rules:\n  - writing/sentence-length\n")
 
         assembler = Assembler(Path("core"))
         result = assembler.assemble("nature", skill_dir)
@@ -105,12 +100,8 @@ def test_assembler_handles_missing_rule_gracefully():
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "test-skill"
         skill_dir.mkdir()
-        (skill_dir / "SKILL.md").write_text(
-            "# Test\n{{RULES_INJECTION_POINT}}\n"
-        )
-        (skill_dir / "manifest.yaml").write_text(
-            "rules:\n  - nonexistent/rule\n"
-        )
+        (skill_dir / "SKILL.md").write_text("# Test\n{{RULES_INJECTION_POINT}}\n")
+        (skill_dir / "manifest.yaml").write_text("rules:\n  - nonexistent/rule\n")
 
         assembler = Assembler(Path("core"))
         result = assembler.assemble("nature", skill_dir)
@@ -123,9 +114,7 @@ def test_assembler_without_injection_point():
     with tempfile.TemporaryDirectory() as tmpdir:
         skill_dir = Path(tmpdir) / "test-skill"
         skill_dir.mkdir()
-        (skill_dir / "SKILL.md").write_text(
-            "# Test Skill\nNo injection point here.\n"
-        )
+        (skill_dir / "SKILL.md").write_text("# Test Skill\nNo injection point here.\n")
 
         assembler = Assembler(Path("core"))
         result = assembler.assemble("nature", skill_dir)

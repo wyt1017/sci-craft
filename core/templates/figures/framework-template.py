@@ -1,4 +1,5 @@
 """Framework diagram template using Graphviz dot."""
+
 import subprocess
 from pathlib import Path
 
@@ -51,7 +52,8 @@ def create_framework_diagram(
     # Generate SVG with timeout
     result = subprocess.run(
         [engine, "-Tsvg", "-o", str(svg_path), str(dot_path)],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
         timeout=timeout,
     )
     if result.returncode != 0:
@@ -60,7 +62,8 @@ def create_framework_diagram(
     # Generate PNG at 300dpi with timeout
     subprocess.run(
         [engine, "-Tpng", "-Gdpi=300", "-o", str(png_path), str(dot_path)],
-        capture_output=True, text=True,
+        capture_output=True,
+        text=True,
         timeout=timeout,
     )
 
@@ -68,6 +71,7 @@ def create_framework_diagram(
 
 
 # --- Dot source builders for common patterns ---
+
 
 def model_architecture_dot(
     layers: list[dict[str, str]],
@@ -84,12 +88,12 @@ def model_architecture_dot(
         palette = DEFAULT_PALETTE_NATURE
 
     lines = [
-        'digraph ModelArchitecture {',
-        '  rankdir=TB;',
+        "digraph ModelArchitecture {",
+        "  rankdir=TB;",
         '  fontname="Arial";',
         '  node [fontname="Arial", fontsize=10, style=filled, penwidth=1];',
         '  edge [fontname="Arial", fontsize=8, penwidth=1.2, arrowsize=0.8];',
-        '',
+        "",
     ]
 
     for i, layer in enumerate(layers):
@@ -97,12 +101,12 @@ def model_architecture_dot(
         color = palette.get(layer["type"], "#0C5DA5")
         lines.append(f'  node{i} [label="{layer["label"]}", shape={shape}, fillcolor="{color}", fontcolor="white"];')
 
-    lines.append('')
+    lines.append("")
     for i in range(len(layers) - 1):
-        lines.append(f'  node{i} -> node{i+1};')
+        lines.append(f"  node{i} -> node{i + 1};")
 
-    lines.append('}')
-    return '\n'.join(lines)
+    lines.append("}")
+    return "\n".join(lines)
 
 
 def pipeline_dot(
@@ -124,12 +128,12 @@ def pipeline_dot(
         connections = [(i, i + 1, "") for i in range(len(stages) - 1)]
 
     lines = [
-        'digraph SystemPipeline {',
-        '  rankdir=LR;',
+        "digraph SystemPipeline {",
+        "  rankdir=LR;",
         '  fontname="Arial";',
         '  node [fontname="Arial", fontsize=10, style=filled, penwidth=1];',
         '  edge [fontname="Arial", fontsize=8, penwidth=1.2, arrowsize=0.8];',
-        '',
+        "",
     ]
 
     for i, stage in enumerate(stages):
@@ -137,13 +141,13 @@ def pipeline_dot(
         color = palette.get(stage["type"], "#0C5DA5")
         lines.append(f'  stage{i} [label="{stage["label"]}", shape={shape}, fillcolor="{color}", fontcolor="white"];')
 
-    lines.append('')
+    lines.append("")
     for src, dst, label in connections:
         lbl = f' [label="{label}"]' if label else ""
-        lines.append(f'  stage{src} -> stage{dst}{lbl};')
+        lines.append(f"  stage{src} -> stage{dst}{lbl};")
 
-    lines.append('}')
-    return '\n'.join(lines)
+    lines.append("}")
+    return "\n".join(lines)
 
 
 if __name__ == "__main__":

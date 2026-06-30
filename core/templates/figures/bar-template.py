@@ -1,4 +1,5 @@
 """Bar chart template for journal-quality figures."""
+
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -63,9 +64,13 @@ def create_bar_chart(
     for i, (series_name, values) in enumerate(data.items()):
         offset = (i - n_series / 2 + 0.5) * width
         ax.bar(
-            x + offset, values, width, label=series_name,
+            x + offset,
+            values,
+            width,
+            label=series_name,
             color=palette[i % len(palette)],
-            linewidth=0.5, edgecolor="white",
+            linewidth=0.5,
+            edgecolor="white",
         )
 
     ax.set_xticks(x)

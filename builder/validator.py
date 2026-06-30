@@ -1,4 +1,5 @@
 """Skill validator — checks skill directory completeness and correctness."""
+
 import re
 from pathlib import Path
 
@@ -72,21 +73,26 @@ def validate_skill(skill_dir: Path) -> list[ValidationError]:
                 if field == "version":
                     version = manifest[field]
                     if not isinstance(version, str) or not re.match(r"^\d+\.\d+\.\d+$", version):
-                        errors.append(ValidationError(
-                            f"manifest.yaml 'version' must follow semantic versioning (e.g., '1.0.0'), got: {version!r}"
-                        ))
+                        errors.append(
+                            ValidationError(
+                                f"manifest.yaml 'version' must follow semantic versioning "
+                                f"(e.g., '1.0.0'), got: {version!r}"
+                            )
+                        )
                 elif field == "status":
                     status = manifest[field]
                     if status not in VALID_STATUSES:
-                        errors.append(ValidationError(
-                            f"manifest.yaml 'status' must be one of {sorted(VALID_STATUSES)}, got: {status!r}"
-                        ))
+                        errors.append(
+                            ValidationError(
+                                f"manifest.yaml 'status' must be one of {sorted(VALID_STATUSES)}, got: {status!r}"
+                            )
+                        )
                 elif field == "triggers":
                     triggers = manifest[field]
                     if not isinstance(triggers, (list, str)) or (isinstance(triggers, list) and len(triggers) == 0):
-                        errors.append(ValidationError(
-                            "manifest.yaml 'triggers' must be a non-empty list or a non-empty string"
-                        ))
+                        errors.append(
+                            ValidationError("manifest.yaml 'triggers' must be a non-empty list or a non-empty string")
+                        )
 
         # 4. Referenced files exist
         references = manifest.get("references", [])

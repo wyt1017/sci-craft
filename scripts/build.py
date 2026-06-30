@@ -1,4 +1,5 @@
 """Build script — assemble and validate skills for a target journal and platform."""
+
 import argparse
 import logging
 import shutil
@@ -31,8 +32,7 @@ ADAPTERS = {
 }
 
 BUILTIN_SKILLS = [
-    d.name for d in SKILLS_DIR.iterdir()
-    if d.is_dir() and d.name != "_shared" and (d / "manifest.yaml").exists()
+    d.name for d in SKILLS_DIR.iterdir() if d.is_dir() and d.name != "_shared" and (d / "manifest.yaml").exists()
 ]
 
 

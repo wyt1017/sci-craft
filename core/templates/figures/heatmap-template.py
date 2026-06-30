@@ -1,4 +1,5 @@
 """Heatmap template for journal-quality figures."""
+
 import matplotlib.pyplot as plt
 
 # Default fonts
@@ -61,9 +62,13 @@ def create_heatmap(
                 val = data[i][j]
                 color = "black" if abs(val) < 0.5 else "white"
                 ax.text(
-                    j, i, format(val, fmt),
-                    ha="center", va="center",
-                    fontsize=6, color=color,
+                    j,
+                    i,
+                    format(val, fmt),
+                    ha="center",
+                    va="center",
+                    fontsize=6,
+                    color=color,
                 )
 
     if title:

@@ -1,4 +1,5 @@
 """Tests for adapters/"""
+
 import tempfile
 from pathlib import Path
 
@@ -59,6 +60,7 @@ def _make_skill_with_shared(tmpdir: Path) -> Path:
 
 
 # --- TRAE adapter tests ---
+
 
 def test_trae_adapter_copies_skill_md():
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -127,6 +129,7 @@ def test_trae_adapter_overwrites_existing():
 
 
 # --- Codex adapter tests ---
+
 
 def test_codex_adapter_copies_skill_md():
     with tempfile.TemporaryDirectory() as tmpdir:
@@ -198,6 +201,7 @@ def test_codex_adapter_handles_missing_manifest():
 
 
 # --- Claude adapter tests ---
+
 
 def test_claude_adapter_renames_to_claude_md():
     with tempfile.TemporaryDirectory() as tmpdir:

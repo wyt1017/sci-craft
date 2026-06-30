@@ -1,4 +1,5 @@
 """Tests for builder/validator.py"""
+
 import tempfile
 from pathlib import Path
 
@@ -7,8 +8,15 @@ import yaml
 from builder.validator import VALID_STATUSES, validate_skill
 
 
-def _make_skill(tmpdir: Path, has_skill_md=True, has_manifest=True, has_readme=True,
-                skill_md_content="# Skill", manifest_content=None, extra_files=None):
+def _make_skill(
+    tmpdir: Path,
+    has_skill_md=True,
+    has_manifest=True,
+    has_readme=True,
+    skill_md_content="# Skill",
+    manifest_content=None,
+    extra_files=None,
+):
     """Helper to create a minimal skill directory."""
     skill_dir = tmpdir / "test-skill"
     skill_dir.mkdir(exist_ok=True)
@@ -98,7 +106,8 @@ def test_existing_reference_passes():
             "references": ["refs/guide.md"],
         }
         skill_dir = _make_skill(
-            Path(tmpdir), manifest_content=manifest,
+            Path(tmpdir),
+            manifest_content=manifest,
             extra_files={"references/refs/guide.md": "# Guide"},
         )
         errors = validate_skill(skill_dir)

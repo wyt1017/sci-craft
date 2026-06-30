@@ -1,4 +1,5 @@
 """Line chart template for journal-quality figures."""
+
 import matplotlib.pyplot as plt
 
 # Default palettes per journal
@@ -63,10 +64,13 @@ def create_line_chart(
     fig, ax = plt.subplots(figsize=figsize)
     for i, (name, y_vals) in enumerate(y_series.items()):
         ax.plot(
-            x_data, y_vals,
+            x_data,
+            y_vals,
             marker=markers[i % len(markers)],
-            markersize=4, linewidth=1.2,
-            label=name, color=palette[i % len(palette)],
+            markersize=4,
+            linewidth=1.2,
+            label=name,
+            color=palette[i % len(palette)],
         )
         if show_error and error_bands and name in error_bands:
             lower, upper = error_bands[name]
@@ -91,5 +95,6 @@ if __name__ == "__main__":
     create_line_chart(
         x_data=x,
         y_series={"Model A": [0.6, 0.72, 0.81, 0.88, 0.92], "Model B": [0.55, 0.65, 0.74, 0.79, 0.83]},
-        xlabel="Epoch", ylabel="Accuracy",
+        xlabel="Epoch",
+        ylabel="Accuracy",
     )

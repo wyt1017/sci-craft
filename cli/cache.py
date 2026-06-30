@@ -26,7 +26,7 @@ def show_cache_stats(project_dir: Path) -> None:
     print(f"  Total cached builds: {stats['total_cached_builds']}")
     print(f"  Cache file: {stats['cache_file']}")
 
-    if stats['total_skills'] > 0:
+    if stats["total_skills"] > 0:
         print("\nCached skills:")
         for skill_name in cache.get_cached_skills():
             print(f"  - {skill_name}")

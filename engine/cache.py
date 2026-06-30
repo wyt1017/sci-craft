@@ -88,6 +88,7 @@ class DependencyCache:
         manifest = {}
         if manifest_path.exists():
             import yaml
+
             with open(manifest_path, encoding="utf-8") as f:
                 manifest = yaml.safe_load(f) or {}
 
@@ -127,11 +128,11 @@ class DependencyCache:
             Combined hash string
         """
         combined = (
-            dep_node.manifest_hash +
-            dep_node.skill_md_hash +
-            "".join(dep_node.rules_hashes) +
-            "".join(dep_node.references_hashes) +
-            dep_node.journal_config_hash
+            dep_node.manifest_hash
+            + dep_node.skill_md_hash
+            + "".join(dep_node.rules_hashes)
+            + "".join(dep_node.references_hashes)
+            + dep_node.journal_config_hash
         )
         return hashlib.md5(combined.encode()).hexdigest()
 

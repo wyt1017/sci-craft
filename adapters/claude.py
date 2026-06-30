@@ -1,4 +1,5 @@
 """Claude Code platform adapter."""
+
 import logging
 import shutil
 from pathlib import Path

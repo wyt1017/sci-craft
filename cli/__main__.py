@@ -15,18 +15,22 @@ def main():
 
     if command == "build":
         from cli.build import main as build_main
+
         sys.argv = ["build"] + args
         return build_main()
     elif command == "workflow":
         from cli.workflow import main as workflow_main
+
         sys.argv = ["workflow"] + args
         return workflow_main()
     elif command == "validate":
         from cli.validate import main as validate_main
+
         sys.argv = ["validate"] + args
         return validate_main()
     elif command == "cache":
         from cli.cache import main as cache_main
+
         sys.argv = ["cache"] + args
         return cache_main()
     else:

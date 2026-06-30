@@ -252,19 +252,23 @@ class WorkflowEngine:
 
                 if dry_run:
                     # Dry run - just record the step would execute
-                    step_results.append(StepResult(
-                        step_id=step_id,
-                        success=True,
-                        output="[DRY RUN] Would execute skill: {step.skill}",
-                    ))
+                    step_results.append(
+                        StepResult(
+                            step_id=step_id,
+                            success=True,
+                            output="[DRY RUN] Would execute skill: {step.skill}",
+                        )
+                    )
                 else:
                     # Actual execution - this would call the skill
                     # For now, return a placeholder
-                    step_results.append(StepResult(
-                        step_id=step_id,
-                        success=True,
-                        output=f"Executed skill: {step.skill} for journal: {step.journal}",
-                    ))
+                    step_results.append(
+                        StepResult(
+                            step_id=step_id,
+                            success=True,
+                            output=f"Executed skill: {step.skill} for journal: {step.journal}",
+                        )
+                    )
 
         return WorkflowResult(
             workflow_name=workflow_def.name,
